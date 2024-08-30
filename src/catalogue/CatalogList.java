@@ -42,4 +42,15 @@ public class CatalogList implements Catalog{
     public void removeObject(Object values) {
         getListObject(values.getClass()).remove(values);
     }
+
+    public CatalogBlacklist setBlacklist(){
+        CatalogBlacklist blacklist = new CatalogBlacklist();
+        for (Class<Object> obj : data.keySet()){
+            for (Object val : data.get(obj)){
+                blacklist.add(val);
+            }
+        }
+        return blacklist;
+    }
+
 }
