@@ -19,6 +19,13 @@ public class CatalogList implements Catalog{
     }
 
     @Override
+    public void add(Object[] array) {
+        for (Object val : array){
+            add(val);
+        }
+    }
+
+    @Override
     public <T> List<T> getListObject(Class<T> obj) {
         return (List<T>) data.get(obj);
     }
