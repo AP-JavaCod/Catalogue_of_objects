@@ -6,4 +6,10 @@ public interface Blacklist {
     <T> void unblock(Class<T> obj);
     <T> boolean isBlacklist(Class<T> obj);
 
+    default <T> void error(Class<T> obj){
+        if (isBlacklist(obj)){
+            throw new BlacklistException(obj);
+        }
+    }
+
 }
