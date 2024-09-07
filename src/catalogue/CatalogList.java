@@ -27,8 +27,8 @@ public class CatalogList implements Catalog {
     }
 
     @Override
-    public <T> List<T> getListObject(Class<T> obj) {
-        return (List<T>) data.get(obj);
+    public Class<?>[] getObjectsClass() {
+        return data.keySet().toArray(new Class[0]);
     }
 
     @Override
@@ -39,7 +39,7 @@ public class CatalogList implements Catalog {
 
     @Override
     public <T> T getObject(Class<T> obj, int index) {
-        return getListObject(obj).get(index);
+        return (T) getListObject(obj).get(index);
     }
 
     @Override
@@ -55,6 +55,16 @@ public class CatalogList implements Catalog {
     @Override
     public void removeObject(Object values) {
         getListObject(values.getClass()).remove(values);
+    }
+
+    public static CatalogList getInstance(Object ...data){
+        CatalogList list = new CatalogList();
+        list.add(data);
+        return list;
+    }
+
+    private <T> List<T> getListObject(Class<?> obj){
+        return (List<T>) data.get(obj);
     }
 
     public CatalogBlacklist setBlacklist() {
