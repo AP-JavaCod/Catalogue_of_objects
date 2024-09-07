@@ -32,12 +32,14 @@ public class CatalogList implements Catalog {
     }
 
     @Override
+    @SuppressWarnings("unchecked")
     public <T> T[] getObjects(Class<T> tClass) {
         List<T> list = getListObject(tClass);
         return list.toArray((T[]) Array.newInstance(tClass, list.size()));
     }
 
     @Override
+    @SuppressWarnings("unchecked")
     public <T> T getObject(Class<T> obj, int index) {
         return (T) getListObject(obj).get(index);
     }
@@ -63,7 +65,8 @@ public class CatalogList implements Catalog {
         return list;
     }
 
-    private <T> List<T> getListObject(Class<?> obj){
+    @SuppressWarnings("unchecked")
+    protected <T> List<T> getListObject(Class<?> obj){
         return (List<T>) data.get(obj);
     }
 

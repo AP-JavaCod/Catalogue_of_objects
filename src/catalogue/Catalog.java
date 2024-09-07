@@ -1,7 +1,5 @@
 package catalogue;
 
-import java.util.List;
-
 public interface Catalog {
 
     void add(Object values);

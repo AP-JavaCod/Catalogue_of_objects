@@ -44,7 +44,7 @@ public class CatalogBlacklist extends CatalogList implements Blacklist {
     }
 
     @Override
-    public <T> List<T> getListObject(Class<T> obj) {
+    protected <T> List<T> getListObject(Class<?> obj) {
         error(obj);
         return super.getListObject(obj);
     }
