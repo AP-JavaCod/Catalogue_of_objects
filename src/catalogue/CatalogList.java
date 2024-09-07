@@ -20,7 +20,7 @@ public class CatalogList implements Catalog {
     }
 
     @Override
-    public void add(Object[] array) {
+    public void addAll(Object ...array) {
         for (Object val : array) {
             add(val);
         }
@@ -77,6 +77,12 @@ public class CatalogList implements Catalog {
                 blacklist.add(val);
             }
         }
+        return blacklist;
+    }
+
+    public CatalogBlacklist setBlacklist(Class<?> c){
+        CatalogBlacklist blacklist = setBlacklist();
+        blacklist.blockAll(c);
         return blacklist;
     }
 

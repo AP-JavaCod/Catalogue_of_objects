@@ -4,7 +4,7 @@ public interface Catalog {
 
     void add(Object values);
 
-    void add(Object[] array);
+    void addAll(Object ...array);
 
     Class<?>[] getObjectsClass();
 

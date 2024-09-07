@@ -9,9 +9,7 @@ public class CatalogBlacklist extends CatalogList implements Blacklist {
 
     private final Set<Class<?>> blacklist = new HashSet<>();
 
-    public CatalogBlacklist(){
-
-    }
+    public CatalogBlacklist(){}
 
     public CatalogBlacklist(Class<?> ...array){
         Collections.addAll(blacklist, array);
@@ -20,6 +18,11 @@ public class CatalogBlacklist extends CatalogList implements Blacklist {
     @Override
     public void block(Class<?> obj) {
         blacklist.add(obj);
+    }
+
+    @Override
+    public void blockAll(Class<?>... obj) {
+        Collections.addAll(blacklist, obj);
     }
 
     @Override
