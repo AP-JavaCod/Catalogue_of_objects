@@ -61,7 +61,7 @@ public class CatalogList implements Catalog {
 
     public static CatalogList getInstance(Object ...data){
         CatalogList list = new CatalogList();
-        list.add(data);
+        list.addAll(data);
         return list;
     }
 
@@ -80,7 +80,7 @@ public class CatalogList implements Catalog {
         return blacklist;
     }
 
-    public CatalogBlacklist setBlacklist(Class<?> c){
+    public CatalogBlacklist setBlacklist(Class<?> ...c){
         CatalogBlacklist blacklist = setBlacklist();
         blacklist.blockAll(c);
         return blacklist;
