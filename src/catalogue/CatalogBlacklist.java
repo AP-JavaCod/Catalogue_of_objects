@@ -1,27 +1,40 @@
 package catalogue;
 
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Objects;
 import java.util.Set;
 
-public class CatalogBlacklist extends CatalogList implements Blacklist{
+public class CatalogBlacklist extends CatalogList implements Blacklist {
 
-    private final Set<Class<Objects>> blacklist = new HashSet<>();
+    private final Set<Class<?>> blacklist = new HashSet<>();
 
-    @Override
-    public <T> void block(Class<T> obj) {
-        blacklist.add((Class<Objects>) obj);
+    public CatalogBlacklist(){
+
+    }
+
+    public CatalogBlacklist(Class<?> ...array){
+        Collections.addAll(blacklist, array);
     }
 
     @Override
-    public <T> void unblock(Class<T> obj) {
+    public void block(Class<?> obj) {
+        blacklist.add(obj);
+    }
+
+    @Override
+    public void unblock(Class<?> obj) {
         blacklist.remove(obj);
     }
 
     @Override
-    public <T> boolean isBlacklist(Class<T> obj) {
+    public boolean isBlacklist(Class<?> obj) {
         return blacklist.contains(obj);
+    }
+
+    @Override
+    public Class<?>[] getBlocks() {
+        return blacklist.toArray(new Class[0]);
     }
 
     @Override
@@ -36,8 +49,8 @@ public class CatalogBlacklist extends CatalogList implements Blacklist{
         return super.getListObject(obj);
     }
 
-    public void removeObjectsBlacklist(){
-        for (Class<Objects> obj : blacklist){
+    public void removeObjectsBlacklist() {
+        for (Class<?> obj : blacklist) {
             removeList(obj);
         }
     }

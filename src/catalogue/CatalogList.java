@@ -1,26 +1,27 @@
 package catalogue;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class CatalogList implements Catalog{
+public class CatalogList implements Catalog {
 
-    private final Map<Class<Object>, List<Object>> data = new HashMap<>();
+    private final Map<Class<?>, List<Object>> data = new HashMap<>();
 
     @Override
     public void add(Object values) {
-        Class<Object> obj = (Class<Object>) values.getClass();
-        if (!data.containsKey(obj)){
-           data.put(obj, new ArrayList<>());
+        Class<?> obj = values.getClass();
+        if (!data.containsKey(obj)) {
+            data.put(obj, new ArrayList<>());
         }
         data.get(obj).add(values);
     }
 
     @Override
     public void add(Object[] array) {
-        for (Object val : array){
+        for (Object val : array) {
             add(val);
         }
     }
@@ -31,17 +32,23 @@ public class CatalogList implements Catalog{
     }
 
     @Override
+    public <T> T[] getObjects(Class<T> tClass) {
+        List<T> list = getListObject(tClass);
+        return list.toArray((T[]) Array.newInstance(tClass, list.size()));
+    }
+
+    @Override
     public <T> T getObject(Class<T> obj, int index) {
         return getListObject(obj).get(index);
     }
 
     @Override
-    public <T> void removeList(Class<T> obj) {
+    public void removeList(Class<?> obj) {
         data.remove(obj);
     }
 
     @Override
-    public <T> void removeObject(Class<T> obj, int index) {
+    public void removeObject(Class<?> obj, int index) {
         getListObject(obj).remove(index);
     }
 
@@ -50,10 +57,10 @@ public class CatalogList implements Catalog{
         getListObject(values.getClass()).remove(values);
     }
 
-    public CatalogBlacklist setBlacklist(){
+    public CatalogBlacklist setBlacklist() {
         CatalogBlacklist blacklist = new CatalogBlacklist();
-        for (Class<Object> obj : data.keySet()){
-            for (Object val : data.get(obj)){
+        for (Class<?> obj : data.keySet()) {
+            for (Object val : data.get(obj)) {
                 blacklist.add(val);
             }
         }

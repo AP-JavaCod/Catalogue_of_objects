@@ -2,7 +2,7 @@ package catalogue;
 
 public class BlacklistException extends RuntimeException {
 
-    public <T> BlacklistException(Class<T> obj) {
+    public BlacklistException(Class<?> obj) {
         super(obj + " on blacklist");
     }
 
