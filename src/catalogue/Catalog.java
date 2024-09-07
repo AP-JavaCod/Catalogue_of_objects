@@ -8,7 +8,7 @@ public interface Catalog {
 
     void add(Object[] array);
 
-    <T> List<T> getListObject(Class<T> obj);
+    Class<?>[] getObjectsClass();
 
     <T> T[] getObjects(Class<T> tClass);
 
