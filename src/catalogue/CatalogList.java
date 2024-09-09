@@ -1,14 +1,8 @@
 package catalogue;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
-public class CatalogList implements Catalog {
-
-    private final Map<Class<?>, List<Object>> data = new HashMap<>();
+public class CatalogList extends ExtractList implements Catalog {
 
     @Override
     public void add(Object values) {
@@ -20,38 +14,10 @@ public class CatalogList implements Catalog {
     }
 
     @Override
-    public void addAll(Object ...array) {
+    public void addAll(Object... array) {
         for (Object val : array) {
             add(val);
         }
-    }
-
-    @Override
-    public Class<?>[] getObjectsClass() {
-        return data.keySet().toArray(new Class[0]);
-    }
-
-    @Override
-    @SuppressWarnings("unchecked")
-    public <T> T[] getObjects(Class<T> tClass) {
-        List<T> list = getListObject(tClass);
-        return list.toArray((T[]) Array.newInstance(tClass, list.size()));
-    }
-
-    @Override
-    @SuppressWarnings("unchecked")
-    public <T> T getObject(Class<T> obj, int index) {
-        return (T) getListObject(obj).get(index);
-    }
-
-    @Override
-    public void removeList(Class<?> obj) {
-        data.remove(obj);
-    }
-
-    @Override
-    public void removeObject(Class<?> obj, int index) {
-        getListObject(obj).remove(index);
     }
 
     @Override
@@ -59,15 +25,10 @@ public class CatalogList implements Catalog {
         getListObject(values.getClass()).remove(values);
     }
 
-    public static CatalogList getInstance(Object ...data){
+    public static CatalogList getInstance(Object... data) {
         CatalogList list = new CatalogList();
         list.addAll(data);
         return list;
-    }
-
-    @SuppressWarnings("unchecked")
-    protected <T> List<T> getListObject(Class<?> obj){
-        return (List<T>) data.get(obj);
     }
 
     public CatalogBlacklist setBlacklist() {
@@ -80,7 +41,7 @@ public class CatalogList implements Catalog {
         return blacklist;
     }
 
-    public CatalogBlacklist setBlacklist(Class<?> ...c){
+    public CatalogBlacklist setBlacklist(Class<?>... c) {
         CatalogBlacklist blacklist = setBlacklist();
         blacklist.blockAll(c);
         return blacklist;
