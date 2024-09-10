@@ -5,7 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class ExtractList implements Extract{
+public class ExtractList implements Extract {
 
     protected final Map<Class<?>, List<Object>> data = new HashMap<>();
 
@@ -38,7 +38,7 @@ public class ExtractList implements Extract{
     }
 
     @SuppressWarnings("unchecked")
-    protected <T> List<T> getListObject(Class<?> obj){
+    protected <T> List<T> getListObject(Class<?> obj) {
         return (List<T>) data.get(obj);
     }
 

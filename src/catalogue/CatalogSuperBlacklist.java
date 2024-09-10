@@ -5,7 +5,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-public class CatalogSuperBlacklist extends CatalogSuperList implements Blacklist{
+public class CatalogSuperBlacklist extends CatalogSuperList implements Blacklist {
 
     private final Set<Class<?>> blacklist = new HashSet<>();
 
@@ -42,7 +42,7 @@ public class CatalogSuperBlacklist extends CatalogSuperList implements Blacklist
 
     @Override
     public void removeObjectsBlacklist() {
-        for (Class<?> obj : blacklist){
+        for (Class<?> obj : blacklist) {
             removeList(obj);
         }
     }

@@ -1,6 +1,7 @@
 package catalogue;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
 
 public class CatalogSuperList extends ExtractList implements CatalogSuper {
 
@@ -18,6 +19,22 @@ public class CatalogSuperList extends ExtractList implements CatalogSuper {
             data.put(obj, new ArrayList<>());
         }
         Collections.addAll(data.get(obj), array);
+    }
+
+    public CatalogSuperBlacklist setBlacklist() {
+        CatalogSuperBlacklist blacklist = new CatalogSuperBlacklist();
+        for (Class<?> obj : data.keySet()) {
+            for (Object val : data.get(obj)) {
+                blacklist.add(obj, val);
+            }
+        }
+        return blacklist;
+    }
+
+    public CatalogSuperBlacklist setBlacklist(Class<?>... c) {
+        CatalogSuperBlacklist blacklist = setBlacklist();
+        blacklist.blockAll(c);
+        return blacklist;
     }
 
 }

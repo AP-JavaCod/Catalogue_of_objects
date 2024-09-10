@@ -4,7 +4,7 @@ public interface Blacklist {
 
     void block(Class<?> obj);
 
-    void blockAll(Class<?> ...obj);
+    void blockAll(Class<?>... obj);
 
     void unblock(Class<?> obj);
 

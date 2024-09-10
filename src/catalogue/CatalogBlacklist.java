@@ -9,9 +9,10 @@ public class CatalogBlacklist extends CatalogList implements Blacklist {
 
     private final Set<Class<?>> blacklist = new HashSet<>();
 
-    public CatalogBlacklist(){}
+    public CatalogBlacklist() {
+    }
 
-    public CatalogBlacklist(Class<?> ...array){
+    public CatalogBlacklist(Class<?>... array) {
         Collections.addAll(blacklist, array);
     }
 
