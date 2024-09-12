@@ -1,33 +1,46 @@
 package test;
 
-import catalogue.CatalogBlacklist;
-import catalogue.CatalogList;
+import catalogue.*;
 
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.Arrays;
 import java.util.Date;
+import java.util.List;
 
 public class TestProject {
 
     public static void main(String[] args) throws MalformedURLException {
         System.out.println("===CatalogList===");
         CatalogList list = CatalogList.getInstance(1, 2, "str", new Date(), "Kotlin", new URL("https://github.com/AP-JavaCod/Catalogue_of_objects"), new Date(1788888));
-        for (Class<?> c : list.getObjectsClass()) {
-            System.out.println(c);
-            for (Object o : list.getObjects(c)) {
-                System.out.println(o);
-            }
-            System.out.println("---------------------------------------------------------------------------------");
-        }
+        print(list);
+
         System.out.println("===CatalogBlacklist===");
         CatalogBlacklist blacklist = list.setBlacklist(Integer.class, URL.class);
-        for (Class<?> c : blacklist.getObjectsClass()){
+        print(blacklist);
+
+        System.out.println("===CatalogSuperList===");
+        CatalogSuperList superList = new CatalogSuperList();
+        superList.add(Number.class, 12);
+        superList.add(Number.class, 3.7);
+        superList.add(Integer.class, 7);
+        superList.add(List.class, Arrays.asList("Java", "C++", "cod"));
+        superList.add(Object.class, new Date());
+        print(superList);
+
+        System.out.println("===CatalogSuperBlacklist===");
+        CatalogSuperBlacklist superBlacklist = superList.setBlacklist(Object.class, Double.class);
+        print(superBlacklist);
+    }
+
+    public static void print(Extract data){
+        for (Class<?> c : data.getObjectsClass()){
             System.out.println(c);
-            if (!blacklist.isBlacklist(c)){
-                for (Object o : blacklist.getObjects(c)) {
+            try {
+                for (Object o : data.getObjects(c)){
                     System.out.println(o);
                 }
-            }else {
+            }catch (BlacklistException e){
                 System.out.println("ERROR: Blacklist");
             }
             System.out.println("---------------------------------------------------------------------------------");

@@ -1,13 +1,21 @@
 package catalogue;
 
 import java.lang.reflect.Array;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 public class ExtractList implements Extract {
 
-    protected final Map<Class<?>, List<Object>> data = new HashMap<>();
+    private final Map<Class<?>, List<Object>> data = new HashMap<>();
+
+    protected final void put(Class<?> obj, Object values){
+        if (!data.containsKey(obj)){
+            data.put(obj, new ArrayList<>());
+        }
+        data.get(obj).add(values);
+    }
 
     @Override
     public Class<?>[] getObjectsClass() {

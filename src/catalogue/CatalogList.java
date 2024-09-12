@@ -1,16 +1,10 @@
 package catalogue;
 
-import java.util.ArrayList;
-
 public class CatalogList extends ExtractList implements Catalog {
 
     @Override
     public void add(Object values) {
-        Class<?> obj = values.getClass();
-        if (!data.containsKey(obj)) {
-            data.put(obj, new ArrayList<>());
-        }
-        data.get(obj).add(values);
+        put(values.getClass(), values);
     }
 
     @Override
@@ -33,8 +27,8 @@ public class CatalogList extends ExtractList implements Catalog {
 
     public CatalogBlacklist setBlacklist() {
         CatalogBlacklist blacklist = new CatalogBlacklist();
-        for (Class<?> obj : data.keySet()) {
-            for (Object val : data.get(obj)) {
+        for (Class<?> obj : getObjectsClass()) {
+            for (Object val : getObjects(obj)) {
                 blacklist.add(val);
             }
         }

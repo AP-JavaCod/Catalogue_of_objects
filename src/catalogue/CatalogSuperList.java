@@ -1,30 +1,23 @@
 package catalogue;
 
-import java.util.ArrayList;
-import java.util.Collections;
-
 public class CatalogSuperList extends ExtractList implements CatalogSuper {
 
     @Override
     public <T> void add(Class<? extends T> obj, T values) {
-        if (!data.containsKey(obj)) {
-            data.put(obj, new ArrayList<>());
-        }
-        data.get(obj).add(values);
+        put(obj, values);
     }
 
     @Override
     public <T> void addAll(Class<? extends T> obj, T... array) {
-        if (!data.containsKey(obj)) {
-            data.put(obj, new ArrayList<>());
+        for (T v : array) {
+            add(obj, v);
         }
-        Collections.addAll(data.get(obj), array);
     }
 
     public CatalogSuperBlacklist setBlacklist() {
         CatalogSuperBlacklist blacklist = new CatalogSuperBlacklist();
-        for (Class<?> obj : data.keySet()) {
-            for (Object val : data.get(obj)) {
+        for (Class<?> obj : getObjectsClass()) {
+            for (Object val : getObjects(obj)) {
                 blacklist.add(obj, val);
             }
         }
