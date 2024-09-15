@@ -1,12 +1,9 @@
 package catalogue;
 
 import java.lang.reflect.Array;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
-public class ExtractList implements Extract {
+public class ExtractList implements Extract, Iterable<ExtractList.DataValues> {
 
     private final Map<Class<?>, List<Object>> data = new HashMap<>();
 
@@ -48,6 +45,75 @@ public class ExtractList implements Extract {
     @SuppressWarnings("unchecked")
     protected <T> List<T> getListObject(Class<?> obj) {
         return (List<T>) data.get(obj);
+    }
+
+    @Override
+    public Iterator<DataValues> iterator() {
+        return new DataIterator(getObjectsClass());
+    }
+
+    protected class DataIterator implements Iterator<DataValues> {
+
+        protected final Class<?>[] classes;
+        protected Object[] objects;
+        protected int indexClass = 0;
+        protected int indexObject = 0;
+
+        public DataIterator(Class<?>[] classes){
+            this.classes = classes;
+            objects = getObjects(this.classes[indexClass]);
+            indexClass++;
+        }
+
+        @Override
+        public boolean hasNext() {
+            return objects.length > indexObject || classes.length > indexClass;
+        }
+
+        @Override
+        public DataValues next() {
+            DataValues val = null;
+            if (objects.length > indexObject) {
+                val = new DataValues(classes[indexClass - 1], objects[indexObject]);
+                indexObject++;
+            }else if (classes.length > indexClass){
+                objects = getObjects(classes[indexClass]);
+                indexClass++;
+                indexObject = 0;
+                if (objects.length > 0){
+                    val = new DataValues(classes[indexClass - 1], objects[indexObject]);
+                    indexObject++;
+                }else {
+                    val = new DataValues(classes[indexClass - 1], null);
+                }
+            }
+            return val;
+        }
+    }
+
+    public class DataValues{
+
+        private final Class<?> classData;
+        private final Object data;
+
+        private DataValues(Class<?> classData, Object data){
+            this.classData = classData;
+            this.data = data;
+        }
+
+        @Override
+        public String toString() {
+            return classData + " : " + data;
+        }
+
+        public Class<?> getClassData() {
+            return classData;
+        }
+
+        public Object getData() {
+            return data;
+        }
+
     }
 
 }

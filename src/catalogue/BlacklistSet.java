@@ -2,9 +2,10 @@ package catalogue;
 
 import java.util.Collections;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.Set;
 
-public abstract class BlacklistSet implements Blacklist {
+public class BlacklistSet implements Blacklist, Iterable<Class<?>> {
 
     private final Set<Class<?>> blacklist = new HashSet<>();
 
@@ -34,6 +35,8 @@ public abstract class BlacklistSet implements Blacklist {
     }
 
     @Override
-    public abstract void removeObjectsBlacklist();
+    public Iterator<Class<?>> iterator() {
+        return blacklist.iterator();
+    }
 
 }

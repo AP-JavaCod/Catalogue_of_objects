@@ -17,6 +17,9 @@ public class TestProject {
 
         System.out.println("===CatalogBlacklist===");
         CatalogBlacklist blacklist = list.setBlacklist(Integer.class, URL.class);
+        for (ExtractList.DataValues d : blacklist){
+            System.out.println(d);
+        }
         print(blacklist);
 
         System.out.println("===CatalogSuperList===");
@@ -26,6 +29,7 @@ public class TestProject {
         superList.add(Integer.class, 7);
         superList.add(List.class, Arrays.asList("Java", "C++", "cod"));
         superList.add(Object.class, new Date());
+        superList.add(Object.class, "long");
         print(superList);
 
         System.out.println("===CatalogSuperBlacklist===");
@@ -33,17 +37,9 @@ public class TestProject {
         print(superBlacklist);
     }
 
-    public static void print(Extract data){
-        for (Class<?> c : data.getObjectsClass()){
-            System.out.println(c);
-            try {
-                for (Object o : data.getObjects(c)){
-                    System.out.println(o);
-                }
-            }catch (BlacklistException e){
-                System.out.println("ERROR: Blacklist");
-            }
-            System.out.println("---------------------------------------------------------------------------------");
+    public static void print(ExtractList data){
+        for (ExtractList.DataValues d : data){
+            System.out.println(d);
         }
     }
 

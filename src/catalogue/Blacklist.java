@@ -12,8 +12,6 @@ public interface Blacklist {
 
     Class<?>[] getBlocks();
 
-    void removeObjectsBlacklist();
-
     default void error(Class<?> obj) {
         if (isBlacklist(obj)) {
             throw new BlacklistException(obj);

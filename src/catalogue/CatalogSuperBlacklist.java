@@ -1,17 +1,13 @@
 package catalogue;
 
+import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Set;
 
 public class CatalogSuperBlacklist extends CatalogSuperList implements Blacklist {
 
-    private final BlacklistSet blacklist = new BlacklistSet() {
-        @Override
-        public void removeObjectsBlacklist() {
-            for (Class<?> obj : getBlocks()) {
-                removeList(obj);
-            }
-        }
-    };
+    private final BlacklistSet blacklist = new BlacklistSet();
 
     @Override
     public void block(Class<?> obj) {
@@ -44,14 +40,26 @@ public class CatalogSuperBlacklist extends CatalogSuperList implements Blacklist
         super.add(obj, values);
     }
 
-    @Override
     public void removeObjectsBlacklist() {
-        blacklist.removeObjectsBlacklist();
+        for (Class<?> obj : blacklist){
+            removeList(obj);
+        }
     }
 
     @Override
     protected <T> List<T> getListObject(Class<?> obj) {
         error(obj);
         return super.getListObject(obj);
+    }
+
+    @Override
+    public Iterator<DataValues> iterator() {
+        Set<Class<?>> notBlacklist = new HashSet<>();
+        for (Class<?> obj : getObjectsClass()){
+            if (!isBlacklist(obj)){
+                notBlacklist.add(obj);
+            }
+        }
+        return new DataIterator(notBlacklist.toArray(new Class[0]));
     }
 }
