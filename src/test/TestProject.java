@@ -17,9 +17,6 @@ public class TestProject {
 
         System.out.println("===CatalogBlacklist===");
         CatalogBlacklist blacklist = list.setBlacklist(Integer.class, URL.class);
-        for (ExtractList.DataValues d : blacklist){
-            System.out.println(d);
-        }
         print(blacklist);
 
         System.out.println("===CatalogSuperList===");
