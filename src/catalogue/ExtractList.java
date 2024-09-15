@@ -72,7 +72,7 @@ public class ExtractList implements Extract, Iterable<ExtractList.DataValues> {
 
         @Override
         public DataValues next() {
-            DataValues val = null;
+            DataValues val;
             if (objects.length > indexObject) {
                 val = new DataValues(classes[indexClass - 1], objects[indexObject]);
                 indexObject++;
@@ -86,6 +86,8 @@ public class ExtractList implements Extract, Iterable<ExtractList.DataValues> {
                 }else {
                     val = new DataValues(classes[indexClass - 1], null);
                 }
+            }else {
+                throw new NullPointerException();
             }
             return val;
         }
