@@ -1,6 +1,6 @@
 package catalogue;
 
-public interface CatalogSuper {
+public interface CatalogSuper extends Catalog{
 
     <T> void add(Class<? extends T> obj, T values);
 
